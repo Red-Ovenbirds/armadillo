@@ -1,5 +1,4 @@
 library armadillo;
 
-class Armadillo {
-  
-}
+export 'src/armadillo.dart';
+export 'src/node_lister/trail/trail.dart';

@@ -1,0 +1,3 @@
+class AnswerQuestion {
+  dynamic answer;
+}
