@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     controller = ArmadilloEditingController(initialData: [
-      Question(label: "Pergunta 1", options: ["a", "b", "c"])
+      Question(label: "Pergunta 1", options: ["a", "b", "c"], answer: "a")
     ], questionAnswered: questionAnswered);
   }
 
