@@ -1,3 +1,4 @@
+import 'package:armadillo/index.dart';
 import 'package:armadillo/src/controller.dart';
 import 'package:armadillo/src/node_lister/node_lister.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,11 @@ class _ArmadilloState extends State<Armadillo> {
     return ChangeNotifierProvider(
         create: (context) => widget.controller != null
             ? widget.controller
-            : ArmadilloEditingController(),
+            : ArmadilloEditingController(trailPlan),
         child: NodeLister());
+  }
+
+  trailPlan(List<Question> questions) {
+    return null;
   }
 }
