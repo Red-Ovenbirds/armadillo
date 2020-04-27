@@ -1,7 +1,5 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:armadillo/armadillo.dart';
+import 'package:armadillo/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,20 +25,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  ArmadilloEditingController controller;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    controller = ArmadilloEditingController(initialData: [
+      Question(label: "Pergunta 1", options: ["a", "b", "c"])
+    ], questionAnswered: questionAnswered);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Armadillo(controller: controller));
+  }
+
+  questionAnswered(Question question, answer) {
+    final questionNumber  =(controller.questions.length+1).toString();
+    final newQuestion = Question(label: "Pergunta " + questionNumber, options: ["a", "b", "c"]);
+    controller.addQuestion(newQuestion);
   }
 }
