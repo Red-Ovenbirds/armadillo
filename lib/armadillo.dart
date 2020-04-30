@@ -1,5 +1,0 @@
-library armadillo;
-
-class Armadillo {
-  
-}
