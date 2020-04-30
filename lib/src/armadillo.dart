@@ -19,7 +19,7 @@ class _ArmadilloState extends State<Armadillo> {
     return ChangeNotifierProvider(
         create: (context) => widget.controller != null
             ? widget.controller
-            : ArmadilloEditingController(trailPlan),
+            : ArmadilloEditingController(trailPlan: trailPlan),
         child: NodeLister());
   }
 
