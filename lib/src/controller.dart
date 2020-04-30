@@ -8,8 +8,9 @@ class ArmadilloEditingController with ChangeNotifier {
   Function(Question, int) _questionTapped;
   Function(List<Question>) _trailEnded;
 
-  ArmadilloEditingController(this.trailPlan, 
-      {List<Question> initialData,
+  ArmadilloEditingController(
+      {@required this.trailPlan,
+      List<Question> initialData,
       Function(Question, dynamic) questionAnswered,
       Function(Question, int) questionTapped,
       Function(List<Question>) trailEnded}) {

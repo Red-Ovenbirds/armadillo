@@ -30,9 +30,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    controller = ArmadilloEditingController(initialData: [
-      Question(label: "Pergunta 1", options: ["a", "b", "c"], answer: "a")
-    ], questionAnswered: questionAnswered);
+    controller = ArmadilloEditingController(
+        initialData: [
+          Question(
+              id: "0",
+              label: "Pergunta 1",
+              options: ["a", "b", "c"],
+              answer: "a")
+        ],
+        trailPlan: (questions) {
+          if (questions.last.id == "4") {
+            return null;
+          }
+          final questionNumber = (questions.length + 1).toString();
+          return Question(
+              id: questionNumber,
+              label: "Pergunta " + questionNumber,
+              options: ["a", "b", "c"]);
+        }, trailEnded: (questions) {
+          print("Chegou no final");
+        });
   }
 
   @override
@@ -42,11 +59,5 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Armadillo(controller: controller));
-  }
-
-  questionAnswered(Question question, answer) {
-    final questionNumber  =(controller.questions.length+1).toString();
-    final newQuestion = Question(label: "Pergunta " + questionNumber, options: ["a", "b", "c"]);
-    controller.addQuestion(newQuestion);
   }
 }
