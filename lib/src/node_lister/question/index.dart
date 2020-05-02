@@ -1,5 +1,4 @@
 import 'package:armadillo/src/node_lister/question/mixin.dart';
-import 'package:armadillo/src/question.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatefulWidget {
