@@ -2,7 +2,7 @@ import 'package:armadillo/index.dart';
 import 'package:flutter/material.dart';
 
 class ArmadilloEditingController with ChangeNotifier {
-  List<Question> questions = [];
+  List<Question> questions;
   final TrailPlan trailPlan;
   Function(Question, dynamic) _questionAnswered;
   Function(Question, int) _questionTapped;
@@ -14,7 +14,7 @@ class ArmadilloEditingController with ChangeNotifier {
       Function(Question, dynamic) questionAnswered,
       Function(Question, int) questionTapped,
       Function(List<Question>) trailEnded}) {
-    this.questions = initialData;
+    this.questions = initialData ?? [];
     this._questionAnswered = questionAnswered;
     this._questionTapped = questionTapped;
     this._trailEnded = trailEnded;
