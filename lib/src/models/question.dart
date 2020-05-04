@@ -92,13 +92,16 @@ class ChecklistAnswer {
   String toString() {
     if(_labelList == null)
       return "Respondido";
+    List<String> labelsSelectedList = List<String>();
     String string = "Selecionado: ";
 
-    for(int i=0; _labelList[i] != _labelList.last; i++)
+    for(int i=0; i < _labelList.length; i++)
       if(_valueList[i])
-        string += "${_labelList[i].toString()}, ";
-    if(_valueList[_labelList.length-1])
-      string += "${_labelList.last.toString()}";
+        labelsSelectedList.add(_labelList[i]);
+
+    for(int i=0; i < labelsSelectedList.length - 1; i++)
+      string += "${labelsSelectedList[i]}, ";
+    string += "${labelsSelectedList.last}";
 
     return string != "Selecionado: " ? string : "Respondido";
   }
