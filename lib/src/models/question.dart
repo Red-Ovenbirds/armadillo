@@ -4,7 +4,7 @@ class Question {
   final String id;
   final QuestionType questionType;
   final String label;
-  final bool showsInfoIcon;
+  final Function(BuildContext) onTapInfoIcon;
   dynamic answer;
   dynamic options;
 
@@ -12,7 +12,7 @@ class Question {
       {@required this.id, this.questionType = QuestionType.selectList,
       this.label = "",
       this.answer,
-      this.showsInfoIcon = false,
+      this.onTapInfoIcon,
       this.options = const []}) {
         if(questionType == QuestionType.select && options.runtimeType != SelectOptions)
           options = SelectOptions();

@@ -97,9 +97,26 @@ class _QuestionWidgetState extends State<QuestionWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    question == null ? '' : question.label,
-                    style: Theme.of(context).textTheme.headline,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        question == null ? '' : question.label,
+                        style: Theme.of(context).textTheme.headline,
+                      ),
+                      question.onTapInfoIcon != null
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.info,
+                              color: Theme.of(context).accentColor,
+                            ),
+                            onPressed: () => question.onTapInfoIcon(context),
+                          )
+                        : Container(
+                            width: 0,
+                            height: 0,
+                          )
+                    ],
                   ),
                   AnimatedDefaultTextStyle(
                     duration: Duration(milliseconds: 500),
