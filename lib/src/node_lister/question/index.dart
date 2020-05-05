@@ -100,9 +100,11 @@ class _QuestionWidgetState extends State<QuestionWidget>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        question == null ? '' : question.label,
-                        style: Theme.of(context).textTheme.headline,
+                      Expanded(
+                        child: Text(
+                          question == null ? '' : question.label,
+                          style: Theme.of(context).textTheme.headline,
+                        ),
                       ),
                       question.onTapInfoIcon != null
                         ? IconButton(
