@@ -92,12 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
       Question(
         id: "6",
         label: "Pergunta 6",
-        questionType: QuestionType.interger,
+        questionType: QuestionType.integer,
       ),
       Question(
         id: "7",
         label: "Pergunta 7",
-        questionType: QuestionType.interger,
+        questionType: QuestionType.integer,
         onTapInfoIcon: (context) {showDialog(context: context, builder: (context) => Dialog(child: Text("clicou em info"),));}
       ),
     ];

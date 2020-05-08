@@ -16,12 +16,12 @@ class Question {
       this.options = const []}) {
         if(questionType == QuestionType.select && options.runtimeType != SelectOptions)
           options = SelectOptions();
-        else if(questionType == QuestionType.interger && options.runtimeType != IntergerOptions)
-          options = IntergerOptions();
+        else if(questionType == QuestionType.integer && options.runtimeType != IntegerOptions)
+          options = IntegerOptions();
     }
 }
 
-enum QuestionType { selectList, selectDropdown, select, checklist, interger }
+enum QuestionType { selectList, selectDropdown, select, checklist, integer }
 
 class SelectOptions {
   final String trueLabel;
@@ -107,14 +107,14 @@ class ChecklistAnswer {
   }
 }
 
-class IntergerOptions {
+class IntegerOptions {
   final int minimum;
   final int maximum;
   final String error;
   final String errorUnderFlow;
   final String errorOverFlow;
 
-  IntergerOptions({
+  IntegerOptions({
     this.minimum,
     this.maximum,
     this.error,

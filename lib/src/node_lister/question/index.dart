@@ -52,7 +52,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
       setState(() {});
     });
 
-    if(this.question(context).questionType == QuestionType.interger) {
+    if(this.question(context).questionType == QuestionType.integer) {
        _formKey = GlobalKey<FormState>();
       _controllerText = TextEditingController();
     }
@@ -187,8 +187,8 @@ class _QuestionWidgetState extends State<QuestionWidget>
         });
       case QuestionType.checklist:
         return _buildChecklist();
-      case QuestionType.interger:
-        return _buildIntergerForm();
+      case QuestionType.integer:
+        return _buildIntegerForm();
     }
   }
 
@@ -316,7 +316,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
     );
   }
 
-  Widget _buildIntergerForm() {
+  Widget _buildIntegerForm() {
     return Form(
       key: _formKey,
       child: Padding(
@@ -342,7 +342,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
           ),
           validator: (value) {
             int number = int.parse(value, radix: 10);
-            IntergerOptions options = this.question(context).options;
+            IntegerOptions options = this.question(context).options;
 
             if(options.minimum != null && number < options.minimum)
               return options.errorUnderFlow ?? options.error ?? "Valor inferior a ${options.minimum}.";
