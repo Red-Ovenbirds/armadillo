@@ -26,28 +26,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ArmadilloEditingController controller;
-
+  var value = true;
   @override
   void initState() {
     super.initState();
+    var myQuestions = buildQuestions();
     controller = ArmadilloEditingController(
         initialData: [
-          Question(
-              id: "0",
-              label: "Pergunta 1",
-              options: ["a", "b", "c"],
-              answer: "a")
+          myQuestions[0]
         ],
         trailPlan: (questions) {
-          if (questions.last.id == "4") {
+          if (questions.last.id == myQuestions.last.id) {
             return null;
           }
-          final questionNumber = (questions.length + 1).toString();
-          return Question(
-              id: questionNumber,
-              label: "Pergunta " + questionNumber,
-              options: ["a", "b", "c"]);
-        }, trailEnded: (questions) {
+          return myQuestions[questions.length];
+        },
+        trailEnded: (questions) {
           print("Chegou no final");
         });
   }
@@ -59,5 +53,53 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Armadillo(controller: controller));
+  }
+
+  List<Question> buildQuestions() {
+    return <Question>[
+      Question(
+        id: "1",
+        label: "Pergunta 1",
+        options: ["a", "b", "c"],
+        // answer: "a",
+      ),
+      Question(
+        id: "2",
+        label: "Pergunta 2",
+        questionType: QuestionType.selectDropdown,
+        options: [1, "b", 3],
+      ),
+      Question(
+        id: "3",
+        label: "Pergunta 3",
+        questionType: QuestionType.select,
+      ),
+      Question(
+        id: "4",
+        label: "Pergunta 4",
+        questionType: QuestionType.select,
+        options: SelectOptions(
+          falseLabel: "Não, obrigado.",
+          trueLabel: "Sim, obrigado.",
+        ),
+      ),
+      Question(
+        id: "5",
+        label: "Pergunta 5",
+        questionType: QuestionType.checklist,
+        options: ["a", "b", 5.6, "d"],
+      ),
+      Question(
+        id: "6",
+        label: "Pergunta 6",
+        questionType: QuestionType.integer,
+      ),
+      Question(
+        id: "7",
+        label: "Pergunta 7",
+        questionType: QuestionType.integer,
+        onTapInfoIcon: (context) {showDialog(context: context, builder: (context) => Dialog(child: Text("clicou em info"),));}
+      ),
+    ];
   }
 }
