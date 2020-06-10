@@ -20,7 +20,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
 
   TextEditingController _controllerText;
   GlobalKey<FormState> _formKey;
-  dynamic _answer;
+  Answer _answer;
 
   @override
   void dispose() {
@@ -103,7 +103,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
                       Expanded(
                         child: Text(
                           question == null ? '' : question.label,
-                          style: Theme.of(context).textTheme.headline,
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
                       question.onTapInfoIcon != null
@@ -182,17 +182,19 @@ class _QuestionWidgetState extends State<QuestionWidget>
       case QuestionType.select:
         return _buildList(this.question(context).options.toList(), (option) {
           answerSelected(SelectAnswer(
-              value: this.question(context).options.value(option),
-              label: option));
+              value: this.question(context).options.value(option.value),
+              label: option.toString()));
         });
       case QuestionType.checklist:
         return _buildChecklist();
       case QuestionType.integer:
         return _buildIntegerForm();
+      default:
+        return null;
     }
   }
 
-  Widget _buildList(List list, Function(dynamic) onPressed) {
+  Widget _buildList(List list, Function(Answer) onPressed) {
     return ListView.builder(
         primary: false,
         shrinkWrap: true,
@@ -210,7 +212,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
-                        onPressed: () => onPressed(option),
+                        onPressed: () => onPressed(Answer(value: option)),
                         color: Theme.of(context).accentColor,
                         child: Text(
                           option.toString(),
@@ -224,7 +226,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
         });
   }
 
-  void answerSelected(dynamic answer) {
+  void answerSelected(Answer answer) {
     _elevated = true;
     _animationController.forward().whenCompleteOrCancel(() {
       this.answer(context, answer);
@@ -234,13 +236,14 @@ class _QuestionWidgetState extends State<QuestionWidget>
   Widget _buildChecklist() {
     List<Widget> children = List<Widget>();
     List options = this.question(context).options;
+    ChecklistAnswer answer;
 
     if(_answer == null)
       if(this.question(context).answer == null || this.question(context).answer.runtimeType != ChecklistAnswer) 
         _answer = ChecklistAnswer(value: options.map((_) => false).toList().cast<bool>(), labelList: options.map((_) => _.toString()).toList().cast<String>() );
       else
         _answer = this.question(context).answer;
-    
+    answer = _answer;
     
     for(int i=0; i<this.question(context).options.length; i++)
       children.add( Padding(
@@ -250,9 +253,12 @@ class _QuestionWidgetState extends State<QuestionWidget>
           child: Row(
             children: <Widget>[
               Checkbox(
-                value: _answer.value[i],
+                value: answer.value[i],
                 onChanged: (bool newValue) {
-                  setState( () {_answer.changeValue(i, value: newValue);} );
+                  setState( () {
+                    answer.changeValue(i, value: newValue);
+                    _answer = answer;
+                  });
                 },
               ),
               Text(options[i].toString()),
@@ -298,7 +304,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
           isExpanded: true,
           underline: Container(),
           value: this.question(context).answer,
-          onChanged: (newValue) => answerSelected(newValue),
+          onChanged: (newValue) => answerSelected(Answer(value: newValue)),
           items: this
               .question(context)
               .options
@@ -329,7 +335,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
         child: TextFormField(
           onEditingComplete: () {
             if(_formKey.currentState.validate()) {
-              answerSelected(int.parse(_controllerText.text, radix: 10));
+              answerSelected(Answer(value: int.parse(_controllerText.text, radix: 10)));
             }
           },
           controller: _controllerText,

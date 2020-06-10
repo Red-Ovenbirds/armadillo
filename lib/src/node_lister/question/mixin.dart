@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 mixin QuestionWidgetMixin {
   
-  void answer(BuildContext context, dynamic answer) {
+  void answer(BuildContext context, Answer answer) {
     final editingController = Provider.of<ArmadilloEditingController>(context, listen: false);
     editingController.answerLastQuestion(answer);
   }

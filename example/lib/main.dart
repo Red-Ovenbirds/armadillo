@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: "1",
         label: "Pergunta 1",
         options: ["a", "b", "c"],
-        // answer: "a",
+        answer: Answer(value: "a"),
       ),
       Question(
         id: "2",
