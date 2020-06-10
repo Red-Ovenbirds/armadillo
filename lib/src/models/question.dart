@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'index.dart';
+
 class Question {
   final String id;
   final QuestionType questionType;
   final String label;
   final Function(BuildContext) onTapInfoIcon;
-  dynamic answer;
+  Answer answer;
   dynamic options;
 
   Question(
@@ -45,11 +47,15 @@ class SelectOptions {
   }
 }
 
-class SelectAnswer {
+class SelectAnswer extends Answer {
+  @override
   bool _value;
+
+  @override
   bool get value {
     return _value;
   }
+  
   String _label;
 
   SelectAnswer({
@@ -66,9 +72,11 @@ class SelectAnswer {
   }
 }
 
-class ChecklistAnswer {
+class ChecklistAnswer extends Answer {
   List<bool> _valueList = List<bool>();
   List<String> _labelList;
+
+  @override
   List<bool> get value {
     return _valueList;
   }
