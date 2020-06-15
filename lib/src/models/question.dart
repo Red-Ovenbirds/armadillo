@@ -8,26 +8,38 @@ class Question {
   final String label;
   final Function(BuildContext) onTapInfoIcon;
   Answer answer;
-  dynamic options;
+  Options options;
 
   Question(
-      {@required this.id, this.questionType = QuestionType.selectList,
+      {@required this.id,
+      this.questionType = QuestionType.selectList,
       this.label = "",
       this.answer,
       this.onTapInfoIcon,
-      this.options = const []}) {
-        if(questionType == QuestionType.select && options.runtimeType != SelectOptions)
-          options = SelectOptions();
-        else if(questionType == QuestionType.integer && options.runtimeType != IntegerOptions)
-          options = IntegerOptions();
+      this.options}) {
+    if (questionType == QuestionType.select) {
+      if (options.runtimeType != SelectOptions)
+        options = SelectOptions();
     }
+    else if (questionType == QuestionType.integer) {
+      if (options == null || options.runtimeType != IntegerOptions)
+      options = IntegerOptions();
+    }
+    else {
+      if(options == null || options.runtimeType != ListOptions)
+        options = ListOptions();
+    }
+  }
 }
 
 enum QuestionType { selectList, selectDropdown, select, checklist, integer }
 
-class SelectOptions {
+class SelectOptions extends Options {
   final String trueLabel;
   final String falseLabel;
+
+  @override
+  List<String> get options => this.toList();
 
   SelectOptions({
     this.trueLabel = "Sim",
@@ -39,10 +51,8 @@ class SelectOptions {
   }
 
   bool value(String label) {
-    if(label == trueLabel)
-      return true;
-    if(label == falseLabel)
-      return false;
+    if (label == trueLabel) return true;
+    if (label == falseLabel) return false;
     return null;
   }
 }
@@ -55,7 +65,7 @@ class SelectAnswer extends Answer {
   bool get value {
     return _value;
   }
-  
+
   String _label;
 
   SelectAnswer({
@@ -86,7 +96,7 @@ class ChecklistAnswer extends Answer {
     List<String> labelList,
   }) {
     _valueList.addAll(value);
-    if(labelList != null) {
+    if (labelList != null) {
       _labelList = List<String>();
       _labelList.addAll(labelList);
     }
@@ -98,16 +108,14 @@ class ChecklistAnswer extends Answer {
 
   @override
   String toString() {
-    if(_labelList == null)
-      return "Respondido";
+    if (_labelList == null) return "Respondido";
     List<String> labelsSelectedList = List<String>();
     String string = "Selecionado: ";
 
-    for(int i=0; i < _labelList.length; i++)
-      if(_valueList[i])
-        labelsSelectedList.add(_labelList[i]);
+    for (int i = 0; i < _labelList.length; i++)
+      if (_valueList[i]) labelsSelectedList.add(_labelList[i]);
 
-    for(int i=0; i < labelsSelectedList.length - 1; i++)
+    for (int i = 0; i < labelsSelectedList.length - 1; i++)
       string += "${labelsSelectedList[i]}, ";
     string += "${labelsSelectedList.last}";
 
@@ -115,12 +123,16 @@ class ChecklistAnswer extends Answer {
   }
 }
 
-class IntegerOptions {
+class IntegerOptions extends Options {
   final int minimum;
   final int maximum;
   final String error;
   final String errorUnderFlow;
   final String errorOverFlow;
+
+  @override
+  List<int> get options =>
+      List.generate(maximum - minimum + 1, (index) => index + minimum);
 
   IntegerOptions({
     this.minimum,

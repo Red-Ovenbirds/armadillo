@@ -60,14 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
       Question(
         id: "1",
         label: "Pergunta 1",
-        options: ["a", "b", "c"],
+        options: ListOptions(list: ["a", "b", "c"]),
         answer: Answer(value: "a"),
       ),
       Question(
         id: "2",
         label: "Pergunta 2",
         questionType: QuestionType.selectDropdown,
-        options: [1, "b", 3],
+        options: ListOptions(list: [1, "b", 3]),
       ),
       Question(
         id: "3",
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: "5",
         label: "Pergunta 5",
         questionType: QuestionType.checklist,
-        options: ["a", "b", 5.6, "d"],
+        options: ListOptions(list: ["a", "b", 5.6, "d"]),
       ),
       Question(
         id: "6",
