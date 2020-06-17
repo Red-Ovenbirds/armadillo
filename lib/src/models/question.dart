@@ -101,7 +101,8 @@ class ChecklistAnswer {
 
     for(int i=0; i < labelsSelectedList.length - 1; i++)
       string += "${labelsSelectedList[i]}, ";
-    string += "${labelsSelectedList.last}";
+    if(labelsSelectedList.isNotEmpty)
+      string += "${labelsSelectedList.last}";
 
     return string != "Selecionado: " ? string : "Respondido";
   }
