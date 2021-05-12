@@ -176,14 +176,15 @@ class _QuestionWidgetState extends State<QuestionWidget>
   Widget buildForm() {
     switch (this.question(context).questionType) {
       case QuestionType.selectList:
-        return _buildList(this.question(context).options, answerSelected);
+        return _buildList(this.question(context).options.options, answerSelected);
       case QuestionType.selectDropdown:
         return _buildDropdown();
       case QuestionType.select:
-        return _buildList(this.question(context).options.toList(), (option) {
+        SelectOptions selectOptions = this.question(context).options;
+        return _buildList(selectOptions.options, (answer) {
           answerSelected(SelectAnswer(
-              value: this.question(context).options.value(option.value),
-              label: option.toString()));
+              value: selectOptions.value(answer.value),
+              label: answer.toString()));
         });
       case QuestionType.checklist:
         return _buildChecklist();
@@ -235,7 +236,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
 
   Widget _buildChecklist() {
     List<Widget> children = List<Widget>();
-    List options = this.question(context).options;
+    List options = this.question(context).options.options;
     ChecklistAnswer answer;
 
     if(_answer == null)
@@ -245,7 +246,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
         _answer = this.question(context).answer;
     answer = _answer;
     
-    for(int i=0; i<this.question(context).options.length; i++)
+    for(int i=0; i<options.length; i++)
       children.add( Padding(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: SizedBox(
@@ -307,6 +308,7 @@ class _QuestionWidgetState extends State<QuestionWidget>
           onChanged: (newValue) => answerSelected(Answer(value: newValue)),
           items: this
               .question(context)
+              .options
               .options
               .map<DropdownMenuItem<dynamic>>((option) {
             return DropdownMenuItem<dynamic>(
