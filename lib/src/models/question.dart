@@ -32,7 +32,14 @@ class Question {
   }
 }
 
-enum QuestionType { selectList, selectDropdown, select, checklist, integer }
+enum QuestionType {
+  selectList,
+  selectDropdown,
+  select,
+  checklist,
+  integer,
+  freeText,
+}
 
 class SelectOptions extends Options {
   final String trueLabel;

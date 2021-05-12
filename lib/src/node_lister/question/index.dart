@@ -52,8 +52,9 @@ class _QuestionWidgetState extends State<QuestionWidget>
       setState(() {});
     });
 
-    if(this.question(context).questionType == QuestionType.integer) {
-       _formKey = GlobalKey<FormState>();
+    if (this.question(context).questionType == QuestionType.integer ||
+        this.question(context).questionType == QuestionType.freeText) {
+      _formKey = GlobalKey<FormState>();
       _controllerText = TextEditingController();
     }
   }
@@ -190,6 +191,8 @@ class _QuestionWidgetState extends State<QuestionWidget>
         return _buildChecklist();
       case QuestionType.integer:
         return _buildIntegerForm();
+      case QuestionType.freeText:
+        return _buildFreeTextForm();
       default:
         return null;
     }
@@ -324,13 +327,44 @@ class _QuestionWidgetState extends State<QuestionWidget>
     );
   }
 
+  Widget _buildFreeTextForm() {
+    return Form(
+        key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            child: TextFormField(
+              onEditingComplete: () {
+                if (_formKey.currentState.validate()) {
+                  answerSelected(Answer(value: _controllerText.text));
+                }
+              },
+              controller: _controllerText,
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide: BorderSide(),
+                ),
+              ),
+              validator: (value) => value == null || value.isEmpty ? "Preencha o campo" : null,
+              keyboardType: TextInputType.text,
+            ),
+          ),
+        ));
+  }
+
   Widget _buildIntegerForm() {
     return Form(
       key: _formKey,
       child: Padding(
       padding: EdgeInsets.all(16.0),
       child: Container(
-        decoration: BoxDecoration(  
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25.0),
         ),
