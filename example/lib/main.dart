@@ -100,6 +100,16 @@ class _MyHomePageState extends State<MyHomePage> {
         questionType: QuestionType.integer,
         onTapInfoIcon: (context) {showDialog(context: context, builder: (context) => Dialog(child: Text("clicou em info"),));}
       ),
+      Question(
+        id: "8",
+        label: "Pergunta 8",
+        questionType: QuestionType.floatNumber,
+      ),
+      Question(
+        id: "9",
+        label: "Pergunta 8",
+        questionType: QuestionType.freeText,
+      ),
     ];
   }
 }
