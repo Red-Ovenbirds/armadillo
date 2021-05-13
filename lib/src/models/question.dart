@@ -25,6 +25,10 @@ class Question {
       if (options == null || options.runtimeType != IntegerOptions)
       options = IntegerOptions();
     }
+    else if (questionType == QuestionType.floatNumber) {
+      if (options == null || options.runtimeType != FloatNumberOptions)
+      options = FloatNumberOptions();
+    }
     else {
       if(options == null || options.runtimeType != ListOptions)
         options = ListOptions();
@@ -32,7 +36,15 @@ class Question {
   }
 }
 
-enum QuestionType { selectList, selectDropdown, select, checklist, integer }
+enum QuestionType {
+  selectList,
+  selectDropdown,
+  select,
+  checklist,
+  integer,
+  freeText,
+  floatNumber,
+}
 
 class SelectOptions extends Options {
   final String trueLabel;
@@ -135,6 +147,25 @@ class IntegerOptions extends Options {
       List.generate(maximum - minimum + 1, (index) => index + minimum);
 
   IntegerOptions({
+    this.minimum,
+    this.maximum,
+    this.error,
+    this.errorUnderFlow,
+    this.errorOverFlow,
+  });
+}
+
+class FloatNumberOptions extends Options {
+  final double minimum;
+  final double maximum;
+  final String error;
+  final String errorUnderFlow;
+  final String errorOverFlow;
+
+  @override
+  Map get options => {"minimum": minimum, "maximum": maximum};
+
+  FloatNumberOptions({
     this.minimum,
     this.maximum,
     this.error,
