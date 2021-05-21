@@ -7,6 +7,7 @@ class Question {
   final QuestionType questionType;
   final String label;
   final Function(BuildContext) onTapInfoIcon;
+  final List<Widget> actions;
   Answer answer;
   Options options;
 
@@ -16,6 +17,7 @@ class Question {
       this.label = "",
       this.answer,
       this.onTapInfoIcon,
+      this.actions,
       this.options}) {
     if (questionType == QuestionType.select) {
       if (options.runtimeType != SelectOptions)
