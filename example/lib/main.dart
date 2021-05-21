@@ -68,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         label: "Pergunta 2",
         questionType: QuestionType.selectDropdown,
         options: ListOptions(list: [1, "b", 3]),
+        actions: [IconButton(icon: Icon(Icons.watch_later_outlined), onPressed: () => showTimePicker(context: context, initialTime: TimeOfDay.now()))]
       ),
       Question(
         id: "3",

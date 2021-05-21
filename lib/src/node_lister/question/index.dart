@@ -108,6 +108,9 @@ class _QuestionWidgetState extends State<QuestionWidget>
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
+                      question.actions != null && question.actions.isNotEmpty
+                        ? Row(children: question.actions,)
+                        : null,
                       question.onTapInfoIcon != null
                         ? IconButton(
                             icon: Icon(
@@ -116,11 +119,8 @@ class _QuestionWidgetState extends State<QuestionWidget>
                             ),
                             onPressed: () => question.onTapInfoIcon(context),
                           )
-                        : Container(
-                            width: 0,
-                            height: 0,
-                          )
-                    ],
+                        : null
+                    ].where((_) => _ != null).cast<Widget>().toList(),
                   ),
                   AnimatedDefaultTextStyle(
                     duration: Duration(milliseconds: 500),
